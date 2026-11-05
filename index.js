@@ -87,42 +87,42 @@ app.get('/my-books', async (req, res) => {
 
 
 
-// app.post('/add-book', async (req, res) => {
-//   try {
-//     const { title, author, category, image, description, userName, userEmail } = req.body ?? {};
+app.post('/add-book', async (req, res) => {
+  try {
+    const { title, author, category, image, description, userName, userEmail } = req.body ?? {};
 
-//     const missing = [
-//       ['title', title],
-//       ['author', author],
-//       ['category', category],
-//       ['image', image],
-//       ['description', description],
-//     ]
-//       .filter(([, value]) => !value || !String(value).trim())
-//       .map(([field]) => field);
+    const missing = [
+      ['title', title],
+      ['author', author],
+      ['category', category],
+      ['image', image],
+      ['description', description],
+    ]
+      .filter(([, value]) => !value || !String(value).trim())
+      .map(([field]) => field);
 
-//     if (missing.length > 0) {
-//       return res.status(400).send({ error: `Missing required fields: ${missing.join(', ')}` });
-//     }
+    if (missing.length > 0) {
+      return res.status(400).send({ error: `Missing required fields: ${missing.join(', ')}` });
+    }
 
-//     const book = {
-//       title: String(title).trim(),
-//       author: String(author).trim(),
-//       category: String(category).trim(),
-//       image: String(image).trim(),
-//       description: String(description).trim(),
-//       userName: String(userName ?? '').trim(),
-//       userEmail: String(userEmail ?? '').trim().toLowerCase(),
-//       createdAt: new Date(),
-//     };
+    const book = {
+      title: String(title).trim(),
+      author: String(author).trim(),
+      category: String(category).trim(),
+      image: String(image).trim(),
+      description: String(description).trim(),
+      userName: String(userName ?? '').trim(),
+      userEmail: String(userEmail ?? '').trim().toLowerCase(),
+      createdAt: new Date(),
+    };
 
-//     const result = await addBookCollection.insertOne(book);
-//     res.status(201).send({ ...book, _id: result.insertedId });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send({ error: 'Failed to add book' });
-//   }
-// });
+    const result = await addBookCollection.insertOne(book);
+    res.status(201).send({ ...book, _id: result.insertedId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: 'Failed to add book' });
+  }
+});
 
 
 
