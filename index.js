@@ -126,36 +126,36 @@ app.get('/my-books', async (req, res) => {
 
 
 
-// app.get('/all-books/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const candidateIds = ObjectId.isValid(id) ? [id, new ObjectId(id)] : [id];
+app.get('/all-books/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const candidateIds = ObjectId.isValid(id) ? [id, new ObjectId(id)] : [id];
 
-//     let book = null;
+    let book = null;
 
-//     for (const candidateId of candidateIds) {
-//       book = await booksCollection.findOne({ _id: candidateId });
+    for (const candidateId of candidateIds) {
+      book = await booksCollection.findOne({ _id: candidateId });
 
-//       if (!book) {
-//         book = await addBookCollection.findOne({ _id: candidateId });
-//       }
+      if (!book) {
+        book = await addBookCollection.findOne({ _id: candidateId });
+      }
 
-//       if (book) {
-//         break;
-//       }
-//     }
+      if (book) {
+        break;
+      }
+    }
 
-//     if (!book) {
-//       return res.status(404).send({ error: 'Book not found' });
-//     }
+    if (!book) {
+      return res.status(404).send({ error: 'Book not found' });
+    }
 
-//     res.send(book);
+    res.send(book);
 
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send({ error: 'Internal server error' });
-//   }
-// });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
